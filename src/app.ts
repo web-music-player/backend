@@ -1,11 +1,8 @@
 // Dependencies
-
-require('dotenv').config();
-
-import express from 'express';
+import dotenv from 'dotenv';
+import express, { Express } from 'express';
 import mongoose from 'mongoose';
-
-import { Express } from 'express';
+dotenv.config();
 
 // Create the app instance
 
