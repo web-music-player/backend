@@ -1,17 +1,22 @@
 // Dependencies
+
 import dotenv from 'dotenv';
 import express, { Express } from 'express';
 import mongoose from 'mongoose';
+
 dotenv.config();
 
-// Create the app instance
+// Create the app instance and add the router
 
 const app: Express = express();
 
+const routes = require('./routes/router');
+app.use('/', routes);
+
 // Set connection values
 
-const port: string = process.env.PORT || "8080";
-const mongodb_uri: string = process.env.MONGODB_URI || "";
+const port = process.env.PORT || 8080;
+const mongodb_uri = process.env.MONGODB_URI || "";
 
 // Connect to the database and start the server
 
