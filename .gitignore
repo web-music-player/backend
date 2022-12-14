@@ -1,0 +1,8 @@
+# Ignora le variabili d'ambiente
+.env
+
+# Ignora la cartella dei node_modules
+node_modules/*
+
+# Ignora i file compilati di TypeScript
+dist/*
