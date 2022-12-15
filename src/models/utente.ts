@@ -1,12 +1,27 @@
-const mongoose = require('mongoose');
-const Schema = mongoose.Schema;
+import mongoose, { Schema} from 'mongoose';
 
-// User model
+// Enum for the account types
 
-module.exports = mongoose.model('Utente', new Schema({
+enum tipoAccountEnum {
+    standard = "standard",
+    creator = "creator"
+};
+
+// TypeScript interface for the user object
+
+interface Utente {
     email: String,
-    tipoAccount: {
-        type: String,
-        enum : ['standard','creator']
-    }
-}, { collection: 'Utente'}));
+    password: String,
+    tipoAccount: tipoAccountEnum
+}
+
+// MongoDB schema for the user object
+
+const schema = new Schema<Utente>({
+    email: { type: String, required: true },
+    password: { type: String, required: true},
+    tipoAccount: { type: String, required: true}
+}, { collection: 'Utente'});
+
+module.exports = mongoose.model<Utente>('Utente', schema);
+  

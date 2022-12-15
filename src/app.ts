@@ -10,6 +10,11 @@ dotenv.config();
 
 const app: Express = express();
 
+// Middleware to parse form data
+
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+
 const routes = require('./routes/router');
 app.use('/', routes);
 
@@ -39,3 +44,4 @@ mongoose.connect(mongodb_uri)
 
 app.use('/', express.static(process.env.FRONTEND || 'src/static'));
 app.use('/', express.static('src/static'));
+
