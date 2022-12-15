@@ -11,25 +11,29 @@
 
     <form action="registration" method="post" id="registrationForm">
       <span>Email:</span>
-      <input name="email" id="email"/>
+      <input name="emailRegistrazione" id="emailRegistrazione"/>
       <span>Password:</span>
-      <input name="password" id="password"/>
+      <input name="passwordRegistrazione" id="passwordRegistrazione"/>
+      <span>Conferma password:</span>
+      <input name="confermaPassword" id="confermaPassword"/>
       <span>TipoAccount:</span>
       <select name="tipoAccount" id="tipoAccount">
         <option value="standard">Standard</option>
         <option value="creator">Creator</option>
       </select>
-      <input type="submit">
+      <button type="submit" onclick="return registration()">Registrati</button>
     </form>
 
     <h1>Login</h1>
 
     <form action="login" method="post" id="loginForm">
       <span>Email:</span>
-      <input name="email" id="email"/>
+      <input name="emailLogin" id="emailLogin"/>
       <span>Password:</span>
-      <input name="password" id="password"/>
-      <input type="submit">
+      <input name="passwordLogin" id="passwordLogin"/>
+      <button type="submit" onclick="return login()">Accedi</button>
     </form>
+
+    <script src="/index.js"></script>
 </body>
 </html>

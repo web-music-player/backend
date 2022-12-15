@@ -42,6 +42,5 @@ mongoose.connect(mongodb_uri)
 
 // Serve front-end static files
 
-app.use('/', express.static(process.env.FRONTEND || 'src/static'));
 app.use('/', express.static('src/static'));
-
+app.use('/', express.static('dist/static'));

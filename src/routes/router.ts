@@ -15,13 +15,13 @@ router.post('/registration', (req: Request, res: Response) => {
     // TODO: need to handle non-complete forms
     // Will use a function to validate the input on the front-end
 
-    Utente.findOne({ email: req.body.email }, (err?: AnyError, data?: UtenteT) => {
+    Utente.findOne({ email: req.body.emailRegistrazione }, (err?: AnyError, data?: UtenteT) => {
 
         if (!data) {
 
             const nuovoUtente = new Utente({
-                email: req.body.email,
-                password: req.body.password,
+                email: req.body.emailRegistrazione,
+                password: req.body.passwordRegistrazione,
                 tipoAccount: req.body.tipoAccount
             })
 
@@ -44,7 +44,7 @@ router.post('/registration', (req: Request, res: Response) => {
 router.post('/login', async (req: Request, res: Response) => {
 
     let utente = await Utente.findOne({
-        email: req.body.email
+        email: req.body.emailLogin
     }).exec();
 
     // Utente non presente nel database
@@ -54,7 +54,7 @@ router.post('/login', async (req: Request, res: Response) => {
     }
 
     // Controllo della password
-	if (utente.password != req.body.password) {
+	if (utente.password != req.body.passwordLogin) {
 		res.send('Password non corretta!')
         return;
 	}
