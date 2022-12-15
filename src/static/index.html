@@ -9,14 +9,27 @@
 <body>
     <h1>Registrazione</h1>
 
-  <form action="registration" method="post" id="registrationForm">
-    <span>Email:</span>
-    <input name="email" id="email"/>
-    <span>Password:</span>
-    <input name="password" id="password"/>
-    <span>TipoAccount:</span>
-    <input name="tipoAccount" id="tipoAccount"/>
-    <input type="submit">
-  </form>
+    <form action="registration" method="post" id="registrationForm">
+      <span>Email:</span>
+      <input name="email" id="email"/>
+      <span>Password:</span>
+      <input name="password" id="password"/>
+      <span>TipoAccount:</span>
+      <select name="tipoAccount" id="tipoAccount">
+        <option value="standard">Standard</option>
+        <option value="creator">Creator</option>
+      </select>
+      <input type="submit">
+    </form>
+
+    <h1>Login</h1>
+
+    <form action="login" method="post" id="loginForm">
+      <span>Email:</span>
+      <input name="email" id="email"/>
+      <span>Password:</span>
+      <input name="password" id="password"/>
+      <input type="submit">
+    </form>
 </body>
 </html>

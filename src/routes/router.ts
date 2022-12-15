@@ -11,6 +11,9 @@ const Utente = require('../models/utente')
 
 router.post('/registration', (req: Request, res: Response) => {
 
+    // TODO: need to handle non-complete forms
+    // Will use a function to validate the input on the front-end
+
     Utente.findOne({ email: req.body.email }, (err: any, data: any) => {
 
         if (!data) {
@@ -25,16 +28,37 @@ router.post('/registration', (req: Request, res: Response) => {
                 if (err) {
                     return res.json({Error: err});
                 }
-                return res.json(data);
+                return res.send('Utente registrato!');
             })
 
         } else {
             if (err) {
                 return res.json(`Errore nella richiesta al database: ${err}`);
             }
-            return res.json({message: "Utente già esistente"});
+            return res.send('Utente già registrato!');
         }
     })    
+});
+
+router.post('/login', async (req: Request, res: Response) => {
+
+    let utente = await Utente.findOne({
+        email: req.body.email
+    }).exec();
+
+    // Utente non presente nel database
+    if (!utente) {
+        res.send('Utente non registrato!')
+        return;
+    }
+
+    // Controllo della password
+	if (utente.password != req.body.password) {
+		res.send('Password non corretta!')
+        return;
+	}
+
+    res.send('Accesso eseguito!')
 });
 
 module.exports = router;
