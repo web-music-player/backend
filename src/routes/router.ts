@@ -10,10 +10,4 @@ import { Request, Response } from 'express';
 const router  = express.Router();
 const upload = multer();
 
-// Routes
-
-router.get('', (req: Request, res: Response) => {
-    res.status(200).send("Hello, world!")
-});
-
 module.exports = router;
