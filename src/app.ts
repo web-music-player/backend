@@ -15,7 +15,7 @@ const app: Express = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-const routes = require('./routes/router');
+import routes from './routes/router';
 app.use('/', routes);
 
 // Set connection values
