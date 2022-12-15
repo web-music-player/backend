@@ -1,11 +1,12 @@
 // Dependencies
 import express, { Request, Response } from 'express';
+import { AnyError } from 'mongodb';
 
 // Router
 const router  = express.Router();
 
 // Models
-const Utente = require('../models/utente')
+import Utente, {Utente as UtenteT} from '../models/utente';
 
 // Routes
 
@@ -14,7 +15,7 @@ router.post('/registration', (req: Request, res: Response) => {
     // TODO: need to handle non-complete forms
     // Will use a function to validate the input on the front-end
 
-    Utente.findOne({ email: req.body.email }, (err: any, data: any) => {
+    Utente.findOne({ email: req.body.email }, (err?: AnyError, data?: UtenteT) => {
 
         if (!data) {
 
@@ -24,7 +25,7 @@ router.post('/registration', (req: Request, res: Response) => {
                 tipoAccount: req.body.tipoAccount
             })
 
-            nuovoUtente.save((err: any, data: any) => {
+            nuovoUtente.save((err?, _data?) => {
                 if (err) {
                     return res.json({Error: err});
                 }
@@ -61,4 +62,4 @@ router.post('/login', async (req: Request, res: Response) => {
     res.send('Accesso eseguito!')
 });
 
-module.exports = router;
+export default router;

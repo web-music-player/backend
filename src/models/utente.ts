@@ -9,7 +9,7 @@ enum tipoAccountEnum {
 
 // TypeScript interface for the user object
 
-interface Utente {
+export interface Utente {
     email: String,
     password: String,
     tipoAccount: tipoAccountEnum
@@ -23,5 +23,5 @@ const schema = new Schema<Utente>({
     tipoAccount: { type: String, required: true}
 }, { collection: 'Utente'});
 
-module.exports = mongoose.model<Utente>('Utente', schema);
+export default mongoose.model<Utente>('Utente', schema);
   
