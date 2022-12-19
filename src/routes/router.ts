@@ -143,8 +143,6 @@ router.post('/api/brano', async (req, res) => {
     res.status(200).json({id: id});
 });
 
-
-
 router.get('/api/cronologia/:id', async (req, res) => {
 
     let cronologia = await Cronologia.findById(req.params.id);
