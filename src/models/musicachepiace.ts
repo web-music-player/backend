@@ -3,6 +3,7 @@ import mongoose, { Schema } from 'mongoose';
 // TypeScript interface for the liked music object
 
 export interface MusicaChePiace {
+    id: Schema.Types.ObjectId,
     utente: Schema.Types.ObjectId,
     listaBrani: Schema.Types.ObjectId[]
 }

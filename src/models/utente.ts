@@ -10,6 +10,7 @@ enum tipoAccountEnum {
 // TypeScript interface for the user object
 
 export interface Utente {
+    id: Schema.Types.ObjectId,
     email: string,
     password: string,
     tipoAccount: tipoAccountEnum

@@ -3,6 +3,7 @@ import mongoose, { Schema } from 'mongoose';
 // TypeScript interface for the playlist object
 
 export interface Playlist {
+    id: Schema.Types.ObjectId,
     utente: Schema.Types.ObjectId,
     listaBrani: Schema.Types.ObjectId[]
 }

@@ -3,6 +3,7 @@ import mongoose, { Schema } from 'mongoose';
 // TypeScript interface for the tag object
 
 export interface Tag {
+    id: Schema.Types.ObjectId,
     nome: string
 }
 

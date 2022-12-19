@@ -3,6 +3,7 @@ import mongoose, { Schema } from 'mongoose';
 // TypeScript interface for the song history object
 
 export interface Cronologia {
+    id: Schema.Types.ObjectId,
     utente: Schema.Types.ObjectId,
     listaBrani: Schema.Types.ObjectId[]
 }

@@ -3,6 +3,7 @@ import mongoose, { Schema } from 'mongoose';
 // TypeScript interface for the song object
 
 export interface Brano {
+    id: Schema.Types.ObjectId,
     nome: String,
     artista: Schema.Types.ObjectId,
     durata: number,
