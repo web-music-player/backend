@@ -1,16 +1,16 @@
 import mongoose, { Schema } from 'mongoose';
 
-// TypeScript interface for the playlist object
+// TypeScript interface for the liked music object
 
-export interface Playlist {
+export interface Preferiti {
     id: Schema.Types.ObjectId,
     utente: Schema.Types.ObjectId,
     listaBrani: Schema.Types.ObjectId[]
 }
 
-// MongoDB schema for the playlist object
+// MongoDB schema for the liked music object
 
-const schema = new Schema<Playlist>({
+const schema = new Schema<Preferiti>({
     utente: {
         type: Schema.Types.ObjectId,
         required: true,
@@ -21,6 +21,6 @@ const schema = new Schema<Playlist>({
         required: true,
         ref: 'Brano'
     }
-}, { collection: 'Playlist'});
+}, { collection: 'Preferiti'});
 
-export default mongoose.model<Playlist>('Playlist', schema);
+export default mongoose.model<Preferiti>('Preferiti', schema);

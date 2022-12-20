@@ -1,13 +1,13 @@
 // https://stackoverflow.com/questions/46155/how-to-validate-an-email-address-in-javascript
 // https://stackoverflow.com/a/59116316
 
-function validateEmail(text: string) {
+export function validateEmail(text: string) {
     var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
     return re.test(text);
 }
 
 // Password valida: lunghezza >= 8 caratteri, una maiuscola, una minuscola, un carattere speciale (%&#!@*^)
-function validatePassword(text: string) {
+export function validatePassword(text: string) {
     var re = /^((?=.*[a-z])(?=.*[A-Z])(?=.*[%&#!@\*\^]).{8,})$/;
     return re.test(text);
 }

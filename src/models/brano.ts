@@ -7,7 +7,7 @@ export interface Brano {
     nome: String,
     artista: Schema.Types.ObjectId,
     durata: number,
-    tags?: Schema.Types.ObjectId[]
+    tags: string[]
 }
 
 // MongoDB schema for the song object
@@ -27,10 +27,12 @@ const schema = new Schema<Brano>({
         required: true
     },
     tags: { 
-        type: [Schema.Types.ObjectId],
+        type: [String],
         required: false,
         ref: 'Tag'
     }
 }, { collection: 'Brano'});
+
+schema.index({ nome: 'text', tags: 'text'});
 
 export default mongoose.model<Brano>('Brano', schema);
