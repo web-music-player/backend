@@ -11,10 +11,6 @@ import Utente, { Utente as UtenteT } from '../models/utente';
 import Brano, { Brano as BranoT } from '../models/brano';
 import Preferiti, { Preferiti as PreferitiT } from '../models/preferiti';
 
-// Input validation functions
-
-import { validateEmail, validatePassword } from '../static/index';
-
 // Application routes
 
 // Add a new user
@@ -23,12 +19,12 @@ router.post('/api/auth/registrazione', async (req, res) => {
     // Request format and input validation
 
     if (!(validateEmail(req.body.email) && validatePassword(req.body.password))) {
-        res.status(400).json({ message: 'Il campo "email" deve essere una stringa non vuota, in formato email. Il campo "password" deve essere rispettare i requisiti di validità' });
+        res.status(400).json({ message: 'Il campo \'email\' deve essere una stringa non vuota, in formato email. Il campo \'password\' deve essere rispettare i requisiti di validità' });
         return;
     }
     
     if (req.body.tipoAccount !== 'standard' && req.body.tipoAccount != 'creator') {
-        res.status(400).json({ message: 'Il campo "tipoAccount" accetta i valori "standard" e "creator"'});
+        res.status(400).json({ message: 'Il campo \'tipoAccount\' accetta i valori \'standard\' e \'creator\''});
     }
 
     // Check if that email address is already registered
@@ -187,7 +183,7 @@ router.post('/api/brano', async (req, res) => {
 });
 
 // Update an already existing song's name or tags
-router.put('/api/brano', async (req, res) => {
+router.patch('/api/brano', async (req, res) => {
 
     // Input validation
 
@@ -220,14 +216,14 @@ router.put('/api/brano', async (req, res) => {
         artista: brano.artista
     });
 
-    if (branoEsistente.length !== 0) {
+    if (branoEsistente.length !== 0 && branoEsistente[0].id !== req.body.idBrano) {
         res.status(409).json({ message: 'Esiste un brano con lo stesso nome' });
         return;
     }
 
     await Brano.updateOne(
         {
-            id: req.body.idBrano
+            _id: req.body.idBrano
         },
         {
             $set: {
@@ -310,7 +306,7 @@ router.get('/api/preferiti/:id', async (req, res) => {
 });
 
 // Add or remove a song from a user's favorites
-router.put('/api/preferiti/modifica', async (req, res) => {
+router.patch('/api/preferiti/modifica', async (req, res) => {
 
     // Input validation
 
@@ -325,7 +321,7 @@ router.put('/api/preferiti/modifica', async (req, res) => {
     }
 
     if (req.body.azione !== 'aggiunta' && req.body.azione !== 'rimozione') {
-        res.status(400).json({ message: 'Il campo "azione" accetta i valori "aggiunta" e "rimozione"'});
+        res.status(400).json({ message: 'Il campo \'azione\' accetta i valori \'aggiunta\' e \'rimozione\''});
         return;
     }
 
@@ -389,5 +385,18 @@ router.put('/api/preferiti/modifica', async (req, res) => {
     preferiti = (await Preferiti.find({ utente: req.body.idUtente }))[0];
     res.status(200).json({ idBrani: preferiti.listaBrani });
 });
+
+// https://stackoverflow.com/questions/46155/how-to-validate-an-email-address-in-javascript
+export function validateEmail(text: string) {
+    var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    return re.test(text);
+}
+
+// Password valida: lunghezza >= 8 caratteri, una maiuscola, una minuscola, un carattere speciale (%&#!@*^)
+// https://stackoverflow.com/a/59116316
+export function validatePassword(text: string) {
+    var re = /^((?=.*[a-z])(?=.*[A-Z])(?=.*[%&#!@\*\^]).{8,})$/;
+    return re.test(text);
+}
 
 export default router;

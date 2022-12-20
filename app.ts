@@ -39,8 +39,3 @@ mongoose.connect(mongodb_uri)
     .catch(() => {
         console.error("Could not connect to the Database")
     });
-
-// Serve front-end static files
-
-app.use('/', express.static('src/static'));
-app.use('/', express.static('dist/static'));
