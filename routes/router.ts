@@ -269,9 +269,9 @@ router.get('/api/ricerca/:testo', async (req, res) => {
 })
 
 // Get a user's favorite songs
-router.get('/api/preferiti/:id', async (req, res) => {
+router.get('/api/preferiti/:idUtente', async (req, res) => {
 
-    const idUtente = req.params.id;
+    const idUtente = req.params.idUtente;
 
     // Input validation
     if (!Types.ObjectId.isValid(idUtente)) {
@@ -387,14 +387,14 @@ router.patch('/api/preferiti/modifica', async (req, res) => {
 });
 
 // https://stackoverflow.com/questions/46155/how-to-validate-an-email-address-in-javascript
-export function validateEmail(text: string) {
+function validateEmail(text: string) {
     var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
     return re.test(text);
 }
 
 // Password valida: lunghezza >= 8 caratteri, una maiuscola, una minuscola, un carattere speciale (%&#!@*^)
 // https://stackoverflow.com/a/59116316
-export function validatePassword(text: string) {
+function validatePassword(text: string) {
     var re = /^((?=.*[a-z])(?=.*[A-Z])(?=.*[%&#!@\*\^]).{8,})$/;
     return re.test(text);
 }

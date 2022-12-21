@@ -3,7 +3,8 @@
   "compilerOptions": {
     "lib": ["dom"],
     "preserveConstEnums": true,
-    "outDir": "./dist"
+    "outDir": "./dist",
+    "resolveJsonModule": true
   },
   "include": ["models", "routes", "app.ts"],
   "exclude": ["node_modules", "**/*.spec.ts"]

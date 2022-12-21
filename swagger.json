@@ -1,0 +1,114 @@
+{
+    "swagger": "2.0",
+    "info": {
+      "version": "1.0.0",
+      "title": "Web Music Player",
+      "description": "API realizzate per il progetto di Ingegneria del Software 2022/23",
+      "license": {
+        "name": "MIT",
+        "url": "https://opensource.org/licenses/MIT"
+      }
+    },
+    "language": "it-it",
+    "host": "localhost:8080",
+    "basePath": "/",
+    "tags": [
+      {
+        "name": "Utenti",
+        "description": "Gestione degli account utente"
+      },
+      {
+        "name": "Brani",
+        "description": "Operazioni relative ai brani"
+      },
+      {
+        "name": "Ricerca",
+        "description": "Ricerca all'interno della piattaforma"
+      },
+      {
+        "name": "Preferiti",
+        "description": "Visualizzazione e modifica dei preferiti"
+      }
+    ],
+    "schemes": ["http"],
+    "consumes": ["application/x-www-form-urlencoded"],
+    "produces": ["application/json"],
+    "paths": {
+        "/api/auth/registrazione": {
+            "post": {
+                "tags": [
+                    "Utenti"
+                ],
+                "summary": "Aggiungi un utente al sistema"
+            }
+        },
+        "/api/auth/accesso": {
+            "post": {
+                "tags": [
+                    "Utenti"
+                ],
+                "summary": "Effettua l'accesso al sistema"
+            }
+        },
+        "/api/eliminaAccount": {
+            "delete": {
+                "tags": [
+                    "Utenti"
+                ],
+                "summary": "Rimuovi un account dal sistema"
+            }
+        },
+        "/api/brano/{idBrano}": {
+            "get": {
+                "tags": [
+                    "Brani"
+                ],
+                "summary": "Ottieni un brano dal suo ID"
+            }
+        },
+        "/api/brano": {
+            "post": {
+                "tags": [
+                    "Brani"
+                ],
+                "summary": "Aggiungi un brano al sistema"
+            },
+            "patch": {
+                "tags": [
+                    "Brani"
+                ],
+                "summary": "Modifica un brano presente nel sistema"
+            },
+            "delete": {
+                "tags": [
+                    "Brani"
+                ],
+                "summary": "Rimuovi un brano dal sistema"
+            }
+        },
+        "/api/ricerca/{testo}": {
+            "get": {
+                "tags": [
+                    "Ricerca"
+                ],
+                "summary": "Ricerca un brano all'interno del sistema"
+            }
+        },
+        "/api/preferiti/{idUtente}": {
+            "get": {
+                "tags": [
+                    "Preferiti"
+                ],
+                "summary": "Ottieni l'elenco dei preferiti di un utente dal suo ID"
+            }
+        },
+        "/api/preferiti": {
+            "patch": {
+                "tags": [
+                    "Preferiti"
+                ],
+                "summary": "Aggiungi o rimuovi un brano dai preferiti di un utente"
+            }
+        }
+    }
+}

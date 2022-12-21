@@ -3,6 +3,8 @@
 import dotenv from 'dotenv';
 import express, { Express } from 'express';
 import mongoose from 'mongoose';
+import swaggerUi from 'swagger-ui-express';
+import swaggerDocument from "./swagger.json";
 
 dotenv.config();
 
@@ -15,8 +17,20 @@ const app: Express = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
+// Routes
+
 import routes from './routes/router';
 app.use('/', routes);
+
+// API documentation
+
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(
+    swaggerDocument,
+    {
+        customSiteTitle: 'Documentazione',
+        customCss: ''
+    }
+));
 
 // Set connection values
 
