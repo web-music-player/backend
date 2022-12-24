@@ -48,9 +48,7 @@ router.post('/api/auth/registrazione', async (req, res) => {
 
     // Return the newly created user
     res.status(201).json({
-        id: nuovoUtente.id,
-        email: nuovoUtente.email,
-        tipoAccount: nuovoUtente.tipoAccount
+        id: nuovoUtente.id
     });
 });
 
@@ -73,9 +71,7 @@ router.post('/api/auth/accesso', async (req, res) => {
 
     // Return the user information
     res.status(200).json({
-        id: utente.id,
-        email: utente.email,
-        tipoAccount: utente.tipoAccount
+        id: utente.id
     });
 });
 
@@ -135,12 +131,12 @@ router.post('/api/brano', async (req, res) => {
 
     // Input validation
 
-    if (!req.body.nomeBrano || !req.body.idArtista || !req.body.durata) {
+    if (!req.body.nomeBrano || !req.body.idUtente || !req.body.durata) {
         res.status(400).json({ message: 'Parametri insufficienti: sono necessari il nome, l\'ID dell\'artista e la durata del brano' });
         return;
     }
 
-    if (!Types.ObjectId.isValid(req.body.idArtista)) {
+    if (!Types.ObjectId.isValid(req.body.idUtente)) {
         res.status(400).json({ message: 'Il valore inserito per l\'artista non è un ID valido' });
         return;
     }
@@ -154,7 +150,7 @@ router.post('/api/brano', async (req, res) => {
 
     // Check if a song already exists
 
-    let brano = await Brano.findOne({ nome: req.body.nomeBrano, artista: req.body.idArtista });
+    let brano = await Brano.findOne({ nome: req.body.nomeBrano, artista: req.body.idUtente });
 
     if (brano) {
         res.status(409).json({ message: 'Brano già caricato' });
@@ -164,7 +160,7 @@ router.post('/api/brano', async (req, res) => {
     // Create a new song object
     let nuovoBrano = new Brano({
         nome: req.body.nomeBrano,
-        artista: req.body.idArtista,
+        artista: req.body.idUtente,
         durata: req.body.durata,
         tags: req.body.tags
     });

@@ -39,7 +39,55 @@
                 "tags": [
                     "Utenti"
                 ],
-                "summary": "Aggiungi un utente al sistema"
+                "summary": "Aggiungi un utente al sistema",
+                "parameters": [
+                    {
+                        "name": "email",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/Utente/properties/email"
+                        }
+                    },
+                    {
+                        "name": "password",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/Utente/properties/password"
+                        }
+                    },
+                    {
+                        "name": "tipoAccount",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/Utente/properties/tipoAccount"
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Created",
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "idUtente": {
+                                    "$ref": "#/definitions/Utente/properties/id"
+                                },
+                                "tokenUtente": {
+                                    "type": "string"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad request"
+                    },
+                    "409": {
+                        "description": "Already exists"
+                    }
+                }
             }
         },
         "/api/auth/accesso": {
@@ -47,7 +95,47 @@
                 "tags": [
                     "Utenti"
                 ],
-                "summary": "Effettua l'accesso al sistema"
+                "summary": "Effettua l'accesso al sistema",
+                "parameters": [
+                    {
+                        "name": "email",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/Utente/properties/email"
+                        }
+                    },
+                    {
+                        "name": "password",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/Utente/properties/password"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "idUtente": {
+                                    "$ref": "#/definitions/Utente/properties/id"
+                                },
+                                "tokenUtente": {
+                                    "type": "string"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "404": {
+                        "description": "Not found"
+                    }
+                }
             }
         },
         "/api/eliminaAccount": {
@@ -55,7 +143,28 @@
                 "tags": [
                     "Utenti"
                 ],
-                "summary": "Rimuovi un account dal sistema"
+                "summary": "Rimuovi un account dal sistema",
+                "parameters": [
+                    {
+                        "name": "idUtente",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/Utente/properties/id"
+                        }
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "No content"
+                    },
+                    "400": {
+                        "description": "Bad request"
+                    },
+                    "404": {
+                        "description": "Not found"
+                    }
+                }
             }
         },
         "/api/brano/{idBrano}": {
@@ -63,7 +172,31 @@
                 "tags": [
                     "Brani"
                 ],
-                "summary": "Ottieni un brano dal suo ID"
+                "summary": "Ottieni un brano dal suo ID",
+                "parameters": [
+                    {
+                        "name": "idBrano",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/Brano/properties/id"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref":"#/definitions/Brano"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad request"
+                    },
+                    "404": {
+                        "description": "Not found"
+                    }
+                }
             }
         },
         "/api/brano": {
@@ -71,19 +204,127 @@
                 "tags": [
                     "Brani"
                 ],
-                "summary": "Aggiungi un brano al sistema"
+                "summary": "Aggiungi un brano al sistema",
+                "parameters": [
+                    {
+                        "name": "nomeBrano",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/Brano/properties/nome"
+                        }
+                    },
+                    {
+                        "name": "idUtente",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/Brano/properties/artista"
+                        }
+                    },
+                    {
+                        "name": "durata",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "minumum": 1,
+                            "example": 1
+                        }
+                    },
+                    {
+                        "name": "tags",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/Brano/properties/tags"
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Created"
+                    },
+                    "400": {
+                        "description": "Bad request"
+                    },
+                    "409": {
+                        "description": "Conflict"
+                    }
+                }
             },
             "patch": {
                 "tags": [
                     "Brani"
                 ],
-                "summary": "Modifica un brano presente nel sistema"
+                "summary": "Modifica un brano presente nel sistema",
+                "parameters": [
+                    {
+                        "name": "idBrano",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/Brano/properties/id"
+                        }
+                    },
+                    {
+                        "name": "nomeBrano",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/Brano/properties/nome"
+                        }
+                    },
+                    {
+                        "name": "tags",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/Brano/properties/tags"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    },
+                    "400": {
+                        "description": "Bad request"
+                    },
+                    "404": {
+                        "description": "Not found"
+                    },
+                    "409": {
+                        "description": "Conflict"
+                    }
+                }
             },
             "delete": {
                 "tags": [
                     "Brani"
                 ],
-                "summary": "Rimuovi un brano dal sistema"
+                "summary": "Rimuovi un brano dal sistema",
+                "parameters": [
+                    {
+                        "name": "idBrano",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/Brano/properties/id"
+                        }
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "No content"
+                    },
+                    "400": {
+                        "description": "Bad request"
+                    },
+                    "404": {
+                        "description": "Not found"
+                    }
+                }
             }
         },
         "/api/ricerca/{testo}": {
@@ -91,7 +332,23 @@
                 "tags": [
                     "Ricerca"
                 ],
-                "summary": "Ricerca un brano all'interno del sistema"
+                "summary": "Ricerca un brano all'interno del sistema",
+                "parameters": [
+                    {
+                        "name": "testo",
+                        "in": "path",
+                        "required": "true",
+                        "schema": {
+                            "type": "string",
+                            "example": "Titolo"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    }
+                }
             }
         },
         "/api/preferiti/{idUtente}": {
@@ -99,7 +356,36 @@
                 "tags": [
                     "Preferiti"
                 ],
-                "summary": "Ottieni l'elenco dei preferiti di un utente dal suo ID"
+                "summary": "Ottieni l'elenco dei preferiti di un utente dal suo ID",
+                "parameters": [
+                    {
+                        "name": "idUtente",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/Preferiti/properties/utente"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "idBrani": {
+                                    "$ref":"#/definitions/Preferiti/properties/listaBrani"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad request"
+                    },
+                    "404": {
+                        "description": "Not found"
+                    }
+                }
             }
         },
         "/api/preferiti": {
@@ -107,8 +393,150 @@
                 "tags": [
                     "Preferiti"
                 ],
-                "summary": "Aggiungi o rimuovi un brano dai preferiti di un utente"
+                "summary": "Aggiungi o rimuovi un brano dai preferiti di un utente",
+                "parameters": [
+                    {
+                        "name": "idUtente",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/Preferiti/properties/utente"
+                        }
+                    },
+                    {
+                        "name": "idBrano",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "example": "63a18edd25800766fed3d137"
+                        }
+                    },
+                    {
+                        "name": "azione",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "enum": ["aggiunta", "rimozione"],
+                            "example": "aggiunta"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "idBrani": {
+                                    "$ref":"#/definitions/Preferiti/properties/listaBrani"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad request"
+                    },
+                    "404": {
+                        "description": "Not found"
+                    },
+                    "409": {
+                        "description": "Conflict"
+                    }
+                }
             }
+        }
+    },
+    "definitions": {
+        "Utente": {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "string",
+                    "example": "639b88a1e5e03f310f6f8294"
+                },
+                "email": {
+                    "type": "string",
+                    "example": "silvanus.bordignon@studenti.unitn.it"
+                },
+                "password": {
+                    "type": "string",
+                    "example": "PasswordValida&"
+                },
+                "tipoAccount": {
+                    "type": "string",
+                    "enum": ["standard", "creator"],
+                    "example": "standard"
+                }
+            },
+            "required": [
+                "id",
+                "email",
+                "password",
+                "tipoAccount"
+            ]
+        },
+        "Brano": {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "string",
+                    "example": "63a18edd25800766fed3d137"
+                },
+                "nome": {
+                    "type": "string",
+                    "example": "Titolo"
+                },
+                "artista": {
+                    "type": "string",
+                    "example": "639b88a1e5e03f310f6f8294"
+                },
+                "durata": {
+                    "type": "integer",
+                    "minimum": 1,
+                    "example": 1
+                },
+                "tags": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    },
+                    "uniqueItems": "true",
+                    "example": ["Pop", "Rock"]
+                }
+            },
+            "required": [
+                "id",
+                "nome",
+                "artista",
+                "durata"
+            ]
+        },
+        "Preferiti": {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "string",
+                    "example": "63a1dcef0f3c5c6958f9623c"
+                },
+                "utente": {
+                    "type": "string",
+                    "example": "639b88a1e5e03f310f6f8294"
+                },
+                "listaBrani": {
+                    "type": "array",
+                    "items": {
+                        "type": "string",
+                        "example": "63a18edd25800766fed3d137"
+                    },
+                    "uniqueItems": "true"
+                }
+            },
+            "required": [
+                "id",
+                "utente"
+            ]
         }
     }
 }
