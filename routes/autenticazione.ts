@@ -1,7 +1,13 @@
 import express from 'express';
 import { Types } from 'mongoose';
+import dotenv from 'dotenv';
+import jwt from 'jsonwebtoken';
 
 const router  = express.Router();
+
+dotenv.config();
+const secret = process.env.SUPER_SECRET || "web-music-player";
+
 
 import Utente, { Utente as UtenteT } from '../models/utente';
 
@@ -38,9 +44,12 @@ router.post('/api/auth/registrazione', async (req, res) => {
     // Save the new user in the database
     nuovoUtente = await nuovoUtente.save();
 
+    const token = generaToken(nuovoUtente);
+
     // Return the newly created user
     res.status(201).json({
-        id: nuovoUtente.id
+        id: nuovoUtente.id,
+        token: token
     });
 });
 
@@ -61,9 +70,12 @@ router.post('/api/auth/accesso', async (req, res) => {
         return;
 	}
 
-    // Return the user information
+    const token = generaToken(utente);
+
+    // Return the newly created user
     res.status(200).json({
-        id: utente.id
+        id: utente.id,
+        token: token
     });
 });
 
@@ -78,6 +90,22 @@ function validateEmail(text: string) {
 function validatePassword(text: string) {
     var re = /^((?=.*[a-z])(?=.*[A-Z])(?=.*[%&#!@\*\^]).{8,})$/;
     return re.test(text);
+}
+
+function generaToken(utente: UtenteT) {
+
+    var payload = {
+        id: utente.id,
+        email: utente.email,
+        tipoAccount: utente.tipoAccount
+    }
+    var options = {
+        expiresIn: 86400
+    }
+
+    const token = jwt.sign(payload, secret, options);
+
+    return token;
 }
 
 export default router;

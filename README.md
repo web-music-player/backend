@@ -14,6 +14,7 @@ Questa repository contiene il codice di **backend** del progetto Web Music Playe
 ```
 MONGODB_URI=""
 PORT=""
+SUPER_SECRET=""
 ```
 4. Eseguire ```npm install``` per installare le librerie del progetto
 5. Eseguire ```npm start``` per avviare il programma in locale

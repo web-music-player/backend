@@ -11,6 +11,8 @@ import eliminaAccount from './routes/eliminaAccount';
 import brani from './routes/brani';
 import preferiti from './routes/preferiti';
 
+import tokenChecker from './tokenChecker';
+
 dotenv.config();
 
 // Set connection values
@@ -42,6 +44,8 @@ app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(
 // Routes (including default route)
 
 app.use('/', autenticazione);
+
+app.use(tokenChecker);
 
 app.use('/', eliminaAccount);
 app.use('/', brani);
