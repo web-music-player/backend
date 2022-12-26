@@ -148,6 +148,18 @@ router.post('/api/brano', async (req, res) => {
         return;
     }
 
+    let artista = await Utente.findOne({ id: req.body.idUtente });
+    if (artista) {
+        if (artista.tipoAccount !== 'creator') {
+            res.status(400).json({ message: 'Il valore inserito per l\'ID dell\'artista non corrisponde ad un account creator' })
+            return;
+        }
+    }
+    else {
+        res.status(404).json({ message: 'Artista non trovato' })
+        return;
+    }
+
     // Check if a song already exists
 
     let brano = await Brano.findOne({ nome: req.body.nomeBrano, artista: req.body.idUtente });
@@ -327,6 +339,15 @@ router.patch('/api/preferiti/modifica', async (req, res) => {
 
     if (!utente) {
         res.status(404).json({ message: 'Utente non registrato' });
+        return;
+    }
+
+    // Check if the song exists
+
+    let brano = await Brano.findById(req.body.idBrano);
+
+    if (!brano) {
+        res.status(404).json({ message: 'Brano non trovato' });
         return;
     }
 

@@ -238,6 +238,9 @@
                     "400": {
                         "description": "Richiesta non valida"
                     },
+                    "404": {
+                        "description": "Artista non trovato"
+                    },
                     "409": {
                         "description": "Un brano con lo stesso nome è già presente"
                     }
@@ -422,7 +425,7 @@
                         "description": "Richiesta non valida"
                     },
                     "404": {
-                        "description": "Utente non trovato"
+                        "description": "Utente/brano non trovato"
                     },
                     "409": {
                         "description": "Azione non valida"
