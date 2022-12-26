@@ -143,7 +143,7 @@ router.post('/api/brano', async (req, res) => {
 
     const durata = parseInt(req.body.durata);
 
-    if (isNaN(durata) || durata < 1 || durata + '' !== req.body.durata) {
+    if (isNaN(durata) || durata < 1) {
         res.status(400).json({ message: 'Il valore inserito per la durata deve essere un numero intero positivo' });
         return;
     }

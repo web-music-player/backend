@@ -22,16 +22,6 @@ app.use(express.urlencoded({ extended: true }));
 import routes from './routes/router';
 app.use('/', routes);
 
-// API documentation
-
-app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(
-    swaggerDocument,
-    {
-        customSiteTitle: 'Documentazione',
-        customCss: ''
-    }
-));
-
 // Set connection values
 
 const port = process.env.PORT || 8080;
@@ -53,3 +43,15 @@ mongoose.connect(mongodb_uri)
     .catch(() => {
         console.error("Could not connect to the Database")
     });
+
+// API documentation
+
+swaggerDocument['host'] = `localhost:${port}`;
+
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(
+    swaggerDocument,
+    {
+        customSiteTitle: 'Documentazione',
+        customCss: ''
+    }
+));

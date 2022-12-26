@@ -3,7 +3,7 @@
 Questa repository contiene il codice di **backend** del progetto Web Music Player. Questa parte del lavoro si concentra sulle API:
 
 - [x] Sviluppo
-- [ ] Documentazione
+- [x] Documentazione
 - [ ] Testing
 
 # Come avviare il progetto
@@ -18,4 +18,4 @@ PORT=""
 4. Eseguire ```npm install``` per installare le librerie del progetto
 5. Eseguire ```npm start``` per avviare il programma in locale
 
-Da qui sarà possibile eseguire i test delle varie API tramite software quali **Postman** o **Insomina**.
+Da qui sarà possibile eseguire i test delle varie API tramite software quali **Postman** o **Insomina**. La documentazione del progetto sarà disponibile all'indirizzo ```http://localhost:PORT/api-docs```
