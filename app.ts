@@ -6,7 +6,17 @@ import mongoose from 'mongoose';
 import swaggerUi from 'swagger-ui-express';
 import swaggerDocument from "./swagger.json";
 
+import autenticazione from './routes/autenticazione';
+import eliminaAccount from './routes/eliminaAccount';
+import brani from './routes/brani';
+import preferiti from './routes/preferiti';
+
 dotenv.config();
+
+// Set connection values
+
+const port = process.env.PORT || 8080;
+const mongodb_uri = process.env.MONGODB_URI || "";
 
 // Create the app instance and add the router
 
@@ -16,33 +26,6 @@ const app: Express = express();
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-
-// Routes
-
-import routes from './routes/router';
-app.use('/', routes);
-
-// Set connection values
-
-const port = process.env.PORT || 8080;
-const mongodb_uri = process.env.MONGODB_URI || "";
-
-// Connect to the database and start the server
-
-mongoose.set('strictQuery', true);
-mongoose.connect(mongodb_uri)
-    .then(() => {
-
-        console.log("Connected to Database");
-
-        app.listen(port, () => {
-            console.log(`Server listening on port ${port}`);
-        });
-
-    })
-    .catch(() => {
-        console.error("Could not connect to the Database")
-    });
 
 // API documentation
 
@@ -55,3 +38,32 @@ app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(
         customCss: ''
     }
 ));
+
+// Routes (including default route)
+
+app.use('/', autenticazione);
+
+app.use('/', eliminaAccount);
+app.use('/', brani);
+app.use('/', preferiti);
+
+app.use((req, res) => {
+    res.status(404).json({ error: 'Risorsa non trovata' })
+});
+
+// Connect to the database and start the server
+
+mongoose.set('strictQuery', true);
+
+mongoose.connect(mongodb_uri, (err) => {
+        if (err) {
+            console.error("Could not connect to the Database");
+            return;
+        }
+        console.log("Connected to Database");
+        
+        app.listen(port, () => {
+            console.log(`Server listening on port ${port}`);
+        });
+    }
+);    

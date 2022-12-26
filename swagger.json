@@ -22,10 +22,6 @@
         "description": "Operazioni relative ai brani"
       },
       {
-        "name": "Ricerca",
-        "description": "Ricerca all'interno della piattaforma"
-      },
-      {
         "name": "Preferiti",
         "description": "Visualizzazione e modifica dei preferiti"
       }
@@ -322,7 +318,7 @@
         "/api/ricerca/{testo}": {
             "get": {
                 "tags": [
-                    "Ricerca"
+                    "Brani"
                 ],
                 "summary": "Ricerca un brano all'interno del sistema",
                 "parameters": [
