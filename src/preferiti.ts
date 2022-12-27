@@ -3,9 +3,9 @@ import { Types } from 'mongoose';
 
 const router  = express.Router();
 
-import Utente, { Utente as UtenteT } from '../models/utente';
-import Brano, { Brano as BranoT } from '../models/brano';
-import Preferiti, { Preferiti as PreferitiT } from '../models/preferiti';
+import Utente, { Utente as UtenteT } from './models/utente';
+import Brano, { Brano as BranoT } from './models/brano';
+import Preferiti, { Preferiti as PreferitiT } from './models/preferiti';
 
 // Get a user's favorite songs
 router.get('/api/preferiti/:idUtente', async (req, res) => {

@@ -6,7 +6,7 @@
     "outDir": "./dist",
     "resolveJsonModule": true
   },
-  "include": ["models", "routes", "app.ts"],
+  "include": ["index.ts", "src/models", "src", "src/app.tsp.ts"],
   "exclude": ["node_modules", "**/*.spec.ts"]
 }
 

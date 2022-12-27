@@ -9,7 +9,7 @@ dotenv.config();
 const secret = process.env.SUPER_SECRET || "web-music-player";
 
 
-import Utente, { Utente as UtenteT } from '../models/utente';
+import Utente, { Utente as UtenteT } from './models/utente';
 
 // Add a new user
 router.post('/api/auth/registrazione', async (req, res) => {

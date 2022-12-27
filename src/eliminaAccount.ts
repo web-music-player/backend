@@ -3,7 +3,7 @@ import { Types } from 'mongoose';
 
 const router  = express.Router();
 
-import Utente, { Utente as UtenteT } from '../models/utente';
+import Utente, { Utente as UtenteT } from './models/utente';
 
 
 // Remove a user

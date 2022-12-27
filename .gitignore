@@ -6,3 +6,6 @@ node_modules/*
 
 # Ignora i file compilati di TypeScript
 dist/*
+
+# Ignora il report di copertura del codice di Jest
+coverage/*

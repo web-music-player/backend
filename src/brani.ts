@@ -3,8 +3,8 @@ import { Types } from 'mongoose';
 
 const router  = express.Router();
 
-import Utente, { Utente as UtenteT } from '../models/utente';
-import Brano, { Brano as BranoT } from '../models/brano';
+import Utente, { Utente as UtenteT } from './models/utente';
+import Brano, { Brano as BranoT } from './models/brano';
 
 // Get a song by its id
 router.get('/api/brano/:idBrano', async (req, res) => {
