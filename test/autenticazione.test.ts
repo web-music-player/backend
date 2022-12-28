@@ -3,8 +3,9 @@ import jwt from 'jsonwebtoken';
 import mongoose from 'mongoose';
 import dotenv from 'dotenv';
 
-import app from './app';
-import Utente from './models/utente';
+import app from '../src/app';
+import Utente from '../src/models/utente';
+import { eliminaUtenteTest } from '../src/scripts';
 
 dotenv.config();
 
@@ -149,18 +150,7 @@ describe('Testing delle API di autenticazione', () => {
         });	
 
         // Rimuovo l'account creato per il testing
-        await eliminaAccountTest(response.body.id);
+        await eliminaUtenteTest(response.body.id);
     });
 
 });
-
-async function eliminaAccountTest(id: string) {
-
-    let utente = await Utente.findById(id).exec();
-
-    if (!utente) {
-        fail('Impossibile eliminare l\'account test')
-    }
-    
-    await utente.deleteOne();
-}

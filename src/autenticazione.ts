@@ -1,15 +1,10 @@
 import express from 'express';
 import { Types } from 'mongoose';
-import dotenv from 'dotenv';
-import jwt from 'jsonwebtoken';
-
-const router  = express.Router();
-
-dotenv.config();
-const secret = process.env.SUPER_SECRET || "web-music-player";
-
 
 import Utente, { Utente as UtenteT } from './models/utente';
+import { generaToken } from './scripts';
+
+const router  = express.Router();
 
 // Add a new user
 router.post('/api/auth/registrazione', async (req, res) => {
@@ -91,22 +86,6 @@ function validateEmail(text: string) {
 function validatePassword(text: string) {
     var re = /^((?=.*[a-z])(?=.*[A-Z])(?=.*[%&#!@\*\^]).{8,})$/;
     return re.test(text);
-}
-
-function generaToken(utente: UtenteT) {
-
-    var payload = {
-        id: utente.id,
-        email: utente.email,
-        tipoAccount: utente.tipoAccount
-    }
-    var options = {
-        expiresIn: 86400
-    }
-
-    const token = jwt.sign(payload, secret, options);
-
-    return token;
 }
 
 export default router;

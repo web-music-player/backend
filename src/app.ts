@@ -11,7 +11,7 @@ import eliminaAccount from './eliminaAccount';
 import brani from './brani';
 import preferiti from './preferiti';
 
-import tokenChecker from './tokenChecker';
+import { tokenChecker } from './scripts';
 
 dotenv.config();
 const port = process.env.PORT || 8080;

@@ -3,8 +3,9 @@ import jwt from 'jsonwebtoken';
 import mongoose from 'mongoose';
 import dotenv from 'dotenv';
 
-import app from './app';
-import Utente from './models/utente';
+import app from '../src/app';
+import Utente from '../src/models/utente';
+import { generaUtenteTest } from '../src/scripts';
 
 dotenv.config();
 
@@ -20,7 +21,7 @@ describe('Testing dell\'API di eliminazione account', () => {
         mongoose.set('strictQuery', true);
         connection = await mongoose.connect(process.env.MONGODB_URI || "");
 
-        ({ id, token } = await generaUtente());
+        ({ id, token } = await generaUtenteTest());
     });
     
     afterAll(() => {
@@ -66,26 +67,3 @@ describe('Testing dell\'API di eliminazione account', () => {
         expect(response.statusCode).toBe(204);
     })
 });
-
-async function generaUtente() {
-    let nuovoUtente = new Utente({
-        email: 'email@valida.com',
-        password: 'PasswordValida&',
-        tipoAccount: 'standard'
-    });
-
-    nuovoUtente = await nuovoUtente.save();
-    
-    var payload = {
-        id: nuovoUtente.id,
-        email: nuovoUtente.email,
-        tipoAccount: nuovoUtente.tipoAccount
-    }
-    var options = {
-        expiresIn: 86400
-    }
-
-    const token = jwt.sign(payload, process.env.SUPER_SECRET || "web-music-player", options);
-    
-    return { id: nuovoUtente.id, token: token }
-}
