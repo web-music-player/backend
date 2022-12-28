@@ -2,7 +2,7 @@ import express from 'express';
 import { Types } from 'mongoose';
 
 import Utente, { Utente as UtenteT } from './models/utente';
-import { generaToken } from './scripts';
+import { generaToken } from '../scripts';
 
 const router  = express.Router();
 

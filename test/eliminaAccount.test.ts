@@ -1,13 +1,9 @@
 import request from 'supertest';
-import jwt from 'jsonwebtoken';
+
 import mongoose from 'mongoose';
-import dotenv from 'dotenv';
 
 import app from '../src/app';
-import Utente from '../src/models/utente';
-import { generaUtenteTest } from '../src/scripts';
-
-dotenv.config();
+import { generaUtenteTest, eliminaUtenteTest } from '../scripts';
 
 describe('Testing dell\'API di eliminazione account', () => {
 
@@ -15,16 +11,12 @@ describe('Testing dell\'API di eliminazione account', () => {
     let id: string, token: string;
 
     beforeAll(async () => {
-        jest.setTimeout(8000);
-        jest.unmock('mongoose');
-
         mongoose.set('strictQuery', true);
         connection = await mongoose.connect(process.env.MONGODB_URI || "");
-
         ({ id, token } = await generaUtenteTest());
     });
-    
-    afterAll(() => {
+
+    afterAll(async () => {
         mongoose.connection.close(true);
     });
     

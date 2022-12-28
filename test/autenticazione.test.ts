@@ -1,29 +1,25 @@
 import request from 'supertest';
 import jwt from 'jsonwebtoken';
-import mongoose from 'mongoose';
 import dotenv from 'dotenv';
+import mongoose from 'mongoose';
 
 import app from '../src/app';
-import Utente from '../src/models/utente';
-import { eliminaUtenteTest } from '../src/scripts';
+import { eliminaUtenteTest } from '../scripts';
 
 dotenv.config();
 
+let connection;
+
+beforeAll(async () => {
+    mongoose.set('strictQuery', true);
+    connection = await mongoose.connect(process.env.MONGODB_URI || "");
+});
+
+afterAll(async () => {
+    mongoose.connection.close(true);
+});
+
 describe('Testing delle API di autenticazione', () => {
-
-    let connection;
-
-    beforeAll(async () => {
-        jest.setTimeout(8000);
-        jest.unmock('mongoose');
-
-        mongoose.set('strictQuery', true);
-        connection = await mongoose.connect(process.env.MONGODB_URI || "");
-    });
-    
-    afterAll(() => {
-        mongoose.connection.close(true);
-    });
     
     test('Email non valida', async () => {
         const response = await request(app)

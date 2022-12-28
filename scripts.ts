@@ -2,7 +2,8 @@ import express, { Request, Response, NextFunction } from 'express';
 import dotenv from 'dotenv';
 import jwt from 'jsonwebtoken';
 
-import Utente, { Utente as UtenteT }  from './models/utente';
+import Utente, { Utente as UtenteT }  from './src/models/utente';
+import Brano, { Brano as BranoT } from './src/models/brano';
 
 dotenv.config();
 const secret = process.env.SUPER_SECRET || "web-music-player";
@@ -66,4 +67,27 @@ export async function eliminaUtenteTest(id: string) {
     }
     
     await utente.deleteOne();
+}
+
+export async function generaBranoTest(idUtente: string) {
+
+    let nuovoBrano = new Brano({
+        nome: 'Titolo del brano',
+        artista: idUtente,
+        durata: 60,
+        tags: []
+    });
+
+    nuovoBrano = await nuovoBrano.save();
+    return nuovoBrano.id;
+}
+
+export async function eliminaBranoTest(idBrano: string) {
+    let brano = await Brano.findById(idBrano).exec();
+    
+    if (!brano) {
+        fail('Impossibile eliminare il brano test')
+    }
+
+    await brano.deleteOne();
 }

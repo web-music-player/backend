@@ -5,7 +5,7 @@
   "main": "index.ts",
   "scripts": {
     "start": "tsc && node dist/index.js",
-    "test": "tsc && jest --coverage"
+    "test": "rm -rf dist/ && tsc && jest"
   },
   "repository": {
     "type": "git",
