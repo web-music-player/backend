@@ -28,20 +28,14 @@ router.get('/api/preferiti/:idUtente', async (req, res) => {
     }
 
     // Check if the document has already been created
-    let preferiti = await Preferiti.find({ utente: idUtente });
+    let preferiti = (await Preferiti.find({ utente: idUtente }))[0];
 
     // If not, create one and reassign the 'preferiti' variable
-    if (preferiti.length != 1) {
-        let nuoviPreferiti = new Preferiti({
-            utente: idUtente,
-            listaBrani: []
-        });
-
-        await nuoviPreferiti.save()
-        preferiti = await Preferiti.find({ utente: idUtente });
+    if (!preferiti) {
+        preferiti = await creaPreferiti(idUtente);
     }
 
-    res.status(200).json({ idBrani: preferiti[0].listaBrani });
+    res.status(200).json({ idBrani: preferiti.listaBrani });
 });
 
 // Add or remove a song from a user's favorites
@@ -89,13 +83,7 @@ router.patch('/api/preferiti/modifica', async (req, res) => {
     let preferiti = (await Preferiti.find({ utente: req.body.idUtente }))[0];
 
     if (!preferiti) {
-        let nuoviPreferiti = new Preferiti({
-            utente: utente,
-            listaBrani: []
-        });
-
-        await nuoviPreferiti.save()
-        preferiti = (await Preferiti.find({ utente: utente }))[0];
+        preferiti = await creaPreferiti(req.body.idUtente);
     }
 
     // Add or remove the song
@@ -133,5 +121,15 @@ router.patch('/api/preferiti/modifica', async (req, res) => {
     preferiti = (await Preferiti.find({ utente: req.body.idUtente }))[0];
     res.status(200).json({ idBrani: preferiti.listaBrani });
 });
+
+async function creaPreferiti(idUtente: string) {
+    let nuoviPreferiti = new Preferiti({
+        utente: idUtente,
+        listaBrani: []
+    });
+
+    await nuoviPreferiti.save()
+    return (await Preferiti.find({ utente: idUtente }))[0];
+}
 
 export default router;

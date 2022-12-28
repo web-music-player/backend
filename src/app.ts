@@ -47,8 +47,4 @@ app.use('/', eliminaAccount);
 app.use('/', brani);
 app.use('/', preferiti);
 
-app.use((req, res) => {
-    res.status(404).json({ error: 'Risorsa non trovata' })
-});
-
 export default app;
