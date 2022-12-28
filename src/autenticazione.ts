@@ -21,8 +21,9 @@ router.post('/api/auth/registrazione', async (req, res) => {
         return;
     }
     
-    if (req.body.tipoAccount !== 'standard' && req.body.tipoAccount != 'creator') {
+    if (req.body.tipoAccount !== 'standard' && req.body.tipoAccount !== 'creator') {
         res.status(400).json({ message: 'Il campo \'tipoAccount\' accetta i valori \'standard\' e \'creator\''});
+        return;
     }
 
     // Check if that email address is already registered
