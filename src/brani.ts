@@ -55,7 +55,8 @@ router.post('/api/brano', async (req, res) => {
         return;
     }
 
-    let artista = await Utente.findOne({ id: req.body.idUtente });
+    let artista = await Utente.findById(req.body.idUtente);
+
     if (artista) {
         if (artista.tipoAccount !== 'creator') {
             res.status(400).json({ message: 'Il valore inserito per l\'ID dell\'artista non corrisponde ad un account creator' })
@@ -115,7 +116,7 @@ router.patch('/api/brano', async (req, res) => {
     // Check if the song exists
 
     let brano = await Brano.findById(req.body.idBrano).exec();
-
+''
     if (!brano) {
         res.status(404).json({ message: 'Brano non trovato' });
         return;

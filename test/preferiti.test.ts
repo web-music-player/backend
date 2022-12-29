@@ -1,5 +1,5 @@
 import request from 'supertest';
-import mongoose from 'mongoose';
+import mongoose, { Types } from 'mongoose';
 
 import app from '../src/app';
 import { generaUtenteTest, eliminaUtenteTest, generaBranoTest, eliminaBranoTest } from '../scripts';
@@ -147,7 +147,7 @@ describe('Testing dell\'API per la modifica dei preferiti', () => {
         expect(response.body).toEqual({ message: 'Il brano da rimuovere non è presente'});
     });
 
-    test('Modifica effettuata', async () => {
+    test('Aggiunta effettuata', async () => {
         const response = await request(app)
             .patch('/api/preferiti/modifica')
             .set('Accept', 'application/json')
@@ -175,5 +175,25 @@ describe('Testing dell\'API per la modifica dei preferiti', () => {
         
         expect(response.statusCode).toBe(409);
         expect(response.body).toEqual({ message: 'Il brano da aggiungere è già presente'});
+    });
+
+    test('Rimozione effettuata', async () => {
+        const response = await request(app)
+            .patch('/api/preferiti/modifica')
+            .set('Accept', 'application/json')
+            .set('x-access-token', token)
+            .send({
+                idUtente: idUtente,
+                idBrano: idBrano,
+                azione: 'rimozione'
+            })
+        
+        expect(response.statusCode).toBe(200);
+
+        (response.body.idBrani).forEach((id:any) => {
+            if (id.toString() === idBrano) {
+                fail('Brano non rimosso');
+            }
+        });
     });
 });

@@ -45,11 +45,11 @@ export function generaToken(utente: UtenteT) {
     return token;
 }
 
-export async function generaUtenteTest() {
+export async function generaUtenteTest(tipoAccount?:string) {
     let nuovoUtente = new Utente({
         email: 'email@valida.com',
         password: 'PasswordValida&',
-        tipoAccount: 'standard'
+        tipoAccount: tipoAccount || 'standard'
     });
 
     nuovoUtente = await nuovoUtente.save();
@@ -69,7 +69,7 @@ export async function eliminaUtenteTest(id: string) {
     await utente.deleteOne();
 }
 
-export async function generaBranoTest(idUtente: string) {
+export async function generaBranoTest(idUtente: string, titolo?: string) {
 
     let nuovoBrano = new Brano({
         nome: 'Titolo del brano',
