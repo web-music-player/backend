@@ -4,6 +4,7 @@ import { Types } from 'mongoose';
 const router  = express.Router();
 
 import Utente, { Utente as UtenteT } from './models/utente';
+import Preferiti, { Preferiti as PreferitiT } from './models/preferiti';
 
 
 // Remove a user
@@ -26,6 +27,13 @@ router.delete('/api/eliminaAccount', async (req, res) => {
 
     // Delete the user
     await utente.deleteOne();
+
+    // Rimuovi la lista preferiti dell'utente
+    let preferiti = await Preferiti.find({ utente: req.body.idUtente })
+
+    if (preferiti.length !== 0) {
+        await Preferiti.deleteOne(preferiti[0].id);
+    }
 
     res.sendStatus(204);
 });

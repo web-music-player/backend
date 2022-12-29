@@ -4,7 +4,7 @@ Questa repository contiene il codice di **backend** del progetto Web Music Playe
 
 - [x] Sviluppo
 - [x] Documentazione
-- [ ] Testing
+- [x] Testing
 
 # Come avviare il progetto
 
