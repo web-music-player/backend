@@ -43,9 +43,6 @@ app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(
 
 // Routes (including default route)
 
-app.use('/', (req, res) => {
-    res.status(404).json({ message: "Risorsa non trovata" });
-})
 app.use('/', autenticazione);
 
 app.use(tokenChecker);
