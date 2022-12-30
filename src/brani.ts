@@ -88,7 +88,7 @@ router.post('/api/brano', async (req, res) => {
     // Save the new song in the database
     nuovoBrano = await nuovoBrano.save();
 
-    // Return the newly created user
+    // Return the newly created song
     res.status(201).json({
         id: nuovoBrano.id,
         nome: nuovoBrano.nome,

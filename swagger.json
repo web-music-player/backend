@@ -229,7 +229,10 @@
                 ],
                 "responses": {
                     "201": {
-                        "description": "Brano aggiunto al sistema"
+                        "description": "Brano aggiunto al sistema",
+                        "schema": {
+                            "$ref":"#/definitions/Brano"
+                        }
                     },
                     "400": {
                         "description": "Richiesta non valida"
@@ -334,7 +337,13 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "Ricerca eseguita"
+                        "description": "Ricerca eseguita",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref":"#/definitions/Brano"
+                            }
+                        }
                     }
                 }
             }
