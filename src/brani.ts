@@ -157,7 +157,7 @@ router.delete('/api/brano', async (req, res) => {
 
     // Input validation
     if (!Types.ObjectId.isValid(req.body.idBrano)) {
-        res.status(400).json({ message: 'Il valore inserito per l\'artista non è un ID valido' });
+        res.status(400).json({ message: 'Il valore inserito per il brano non è un ID valido' });
         return;
     }
 

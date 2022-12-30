@@ -45,6 +45,8 @@ router.post('/api/auth/registrazione', async (req, res) => {
     // Return the newly created user
     res.status(201).json({
         id: nuovoUtente.id,
+        email: nuovoUtente.email,
+        tipoAccount: nuovoUtente.tipoAccount,
         token: token
     });
 });
@@ -71,6 +73,8 @@ router.post('/api/auth/accesso', async (req, res) => {
     // Return the newly created user
     res.status(200).json({
         id: utente.id,
+        email: utente.email,
+        tipoAccount: utente.tipoAccount,
         token: token
     });
 });

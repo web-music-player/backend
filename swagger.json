@@ -66,6 +66,13 @@
                                 "idUtente": {
                                     "$ref": "#/definitions/Utente/properties/id"
                                 },
+                                "email": {
+                                    "$ref": "#/definitions/Utente/properties/email"
+                                },
+                                
+                                "tipoAccount": {
+                                    "$ref": "#/definitions/Utente/properties/tipoAccount"
+                                },
                                 "tokenUtente": {
                                     "type": "string"
                                 }
@@ -113,6 +120,13 @@
                             "properties": {
                                 "idUtente": {
                                     "$ref": "#/definitions/Utente/properties/id"
+                                },
+                                "email": {
+                                    "$ref": "#/definitions/Utente/properties/email"
+                                },
+                                
+                                "tipoAccount": {
+                                    "$ref": "#/definitions/Utente/properties/tipoAccount"
                                 },
                                 "tokenUtente": {
                                     "type": "string"

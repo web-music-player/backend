@@ -76,7 +76,12 @@ describe('Testing delle API di autenticazione', () => {
         // Verifica la presenza di ID, token, e la validità del token
 
         expect(response.body)
-            .toEqual(expect.objectContaining({ id: expect.any(String), token: expect.any(String)}));
+            .toEqual(expect.objectContaining({
+                id: expect.any(String),
+                email: expect.any(String),
+                tipoAccount: expect.any(String),
+                token: expect.any(String)
+            }));
 
         let token = response.body.token || "";
         jwt.verify(token, process.env.SUPER_SECRET || "web-music-player", {}, (err, decoded) => {			
@@ -136,8 +141,13 @@ describe('Testing delle API di autenticazione', () => {
         // Verifica la presenza di ID, token, e la validità del token
 
         expect(response.body)
-            .toEqual(expect.objectContaining({ id: expect.any(String), token: expect.any(String)}));
-
+            .toEqual(expect.objectContaining({
+                id: expect.any(String),
+                email: expect.any(String),
+                tipoAccount: expect.any(String),
+                token: expect.any(String)
+            }));
+            
         let token = response.body.token || "";
         jwt.verify(token, process.env.SUPER_SECRET || "web-music-player", {}, (err, decoded) => {			
             if (err) {
