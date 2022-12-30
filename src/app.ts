@@ -2,6 +2,7 @@
 
 import dotenv from 'dotenv';
 import express, { Express } from 'express';
+import cors from 'cors';
 
 import swaggerUi from 'swagger-ui-express';
 import swaggerDocument from "../swagger.json";
@@ -19,6 +20,9 @@ const port = process.env.PORT || 8080;
 // Create the app instance and add the router
 
 const app: Express = express();
+
+// CORS requests
+app.use(cors());
 
 // Middleware to parse form data
 
