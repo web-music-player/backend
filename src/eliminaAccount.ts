@@ -19,7 +19,6 @@ router.delete('/api/eliminaAccount', async (req, res) => {
     // Check if the user exists
 
     let utente = await Utente.findById(req.body.idUtente).exec();
-
     if (!utente) {
         res.status(404).json({ message: 'Utente non trovato' });
         return;
@@ -32,7 +31,7 @@ router.delete('/api/eliminaAccount', async (req, res) => {
     let preferiti = await Preferiti.find({ utente: req.body.idUtente })
 
     if (preferiti.length !== 0) {
-        await Preferiti.deleteOne(preferiti[0].id);
+        await Preferiti.deleteOne({ id: preferiti[0].id });
     }
 
     res.sendStatus(204);
