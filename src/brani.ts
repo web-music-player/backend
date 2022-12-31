@@ -5,6 +5,7 @@ const router  = express.Router();
 
 import Utente, { Utente as UtenteT } from './models/utente';
 import Brano, { Brano as BranoT } from './models/brano';
+import Preferiti, { Preferiti as PreferitiT } from './models/preferiti';
 
 // Get a song by its id
 router.get('/api/brano/:idBrano', async (req, res) => {
@@ -173,6 +174,12 @@ router.delete('/api/brano', async (req, res) => {
     // Delete the song
     await brano.deleteOne();
     
+    // Delete the song from any favorite list that could have it
+    await Preferiti.updateMany(
+        {},
+        { $pull: { listaBrani: brano.id } }
+    );
+
     res.sendStatus(204);
 });
 

@@ -4,6 +4,7 @@ import { Types } from 'mongoose';
 const router  = express.Router();
 
 import Utente, { Utente as UtenteT } from './models/utente';
+import Brano, { Brano as BranoT } from './models/brano';
 import Preferiti, { Preferiti as PreferitiT } from './models/preferiti';
 
 
@@ -33,6 +34,16 @@ router.delete('/api/eliminaAccount', async (req, res) => {
     if (preferiti.length !== 0) {
         await Preferiti.deleteOne({ id: preferiti[0].id });
     }
+
+    // Rimuoti tutti i brani caricati da quell'utente (anche da liste preferiti)
+    let brani = await Brano.find({ artista: utente.id });
+    
+    brani.forEach(async (brano:any) => {
+        await Preferiti.updateMany(
+            {},
+            { $pull: { listaBrani: brano.id } }
+        );
+    });
 
     res.sendStatus(204);
 });
