@@ -117,7 +117,7 @@ router.patch('/api/brano', async (req, res) => {
     // Check if the song exists
 
     let brano = await Brano.findById(req.body.idBrano).exec();
-''
+
     if (!brano) {
         res.status(404).json({ message: 'Brano non trovato' });
         return;

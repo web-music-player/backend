@@ -42,7 +42,7 @@ router.get('/api/preferiti/:idUtente', async (req, res) => {
 router.patch('/api/preferiti/modifica', async (req, res) => {
 
     // Input validation
-
+    
     if (!Types.ObjectId.isValid(req.body.idUtente)) {
         res.status(400).json({ message: 'Il valore inserito per l\'utente non è un ID valido' });
         return;

@@ -8,7 +8,9 @@ Questa repository contiene il codice di **backend** del progetto Web Music Playe
 
 # Come avviare il progetto
 
-Il progetto si può trovare all'URL [wmp-backend.up.railway.app](wmp-backend.up.railway.app). Se l'host non fosse attivo, è possibile eseguire il progetto in locale in questo modo:
+Il backend è live all'URL [https://wmp-backend.up.railway.app](https://wmp-backend.up.railway.app). Qui è possibile solamente eseguire le richieste API e visualizzare la documentazione all'indirizzo [https://wmp-backend.up.railway.app/api-docs](https://wmp-backend.up.railway.app/api-docs).
+
+Se il sito dovesse essere offline, è possibile eseguire il progetto localmente in questo modo:
 
 1. Clonare il progetto
 2. Eseguire ```cd backend``` per entrare nella cartella
@@ -21,4 +23,4 @@ SUPER_SECRET=""
 1. Eseguire ```npm install``` per installare le librerie del progetto
 2. Eseguire ```npm start``` per avviare il programma in locale
 
-Da qui sarà possibile eseguire i test delle varie API tramite software quali **Postman** o **Insomina**. La documentazione del progetto sarà disponibile all'indirizzo ```http://localhost:PORT/api-docs```
+Per visualizzare la documentazione in locale è necessario sostituire al nome dell'host ```localhost``` nel file ```src/app.ts```, riga 34. Da qui sarà possibile eseguire i test delle varie API tramite software quali **Postman** o **Insomina**.
