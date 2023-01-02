@@ -31,7 +31,7 @@ app.use(express.urlencoded({ extended: true }));
 
 // API documentation
 
-swaggerDocument['host'] = `localhost:${port}`;
+swaggerDocument['host'] = `wmp-backend.up.railway.app`;
 
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(
     swaggerDocument,

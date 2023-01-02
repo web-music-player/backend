@@ -23,4 +23,4 @@ SUPER_SECRET=""
 1. Eseguire ```npm install``` per installare le librerie del progetto
 2. Eseguire ```npm start``` per avviare il programma in locale
 
-Per visualizzare la documentazione in locale è necessario sostituire al nome dell'host ```localhost``` nel file ```src/app.ts```, riga 34. Da qui sarà possibile eseguire i test delle varie API tramite software quali **Postman** o **Insomina**.
+Per visualizzare la documentazione in locale è necessario sostituire al nome dell'host ```localhost:${port}``` nel file ```src/app.ts```, riga 34. Da qui sarà possibile eseguire i test delle varie API tramite software quali **Postman** o **Insomina**.
