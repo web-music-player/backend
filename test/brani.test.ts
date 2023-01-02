@@ -311,7 +311,7 @@ describe('Testing dell\'API per l\'eliminazione di un brano', () => {
             })
         
         expect(response.statusCode).toBe(400);
-        expect(response.body).toEqual({ message: 'Il valore inserito per l\'artista non è un ID valido' });
+        expect(response.body).toEqual({ message: 'Il valore inserito per il brano non è un ID valido' });
     });
 
     test('Brano non trovato', async () => {

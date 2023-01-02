@@ -3,21 +3,29 @@ import mongoose, { Types } from 'mongoose';
 
 import app from '../src/app';
 import { generaUtenteTest, eliminaUtenteTest, generaBranoTest, eliminaBranoTest } from '../scripts';
-import e from 'express';
 
 let connection;
-let idUtente: string, token: string, idBrano: string;
+let idUtente_1: string, token_1: string, idBrano_1: string;
+let idUtente_2: string, token_2: string, idBrano_2: string;
 
 beforeAll(async () => {
     mongoose.set('strictQuery', true);
     connection = await mongoose.connect(process.env.MONGODB_URI || "");
-    ({ id: idUtente, token } = await generaUtenteTest());
-    idBrano = await generaBranoTest(idUtente);
+
+    ({ id: idUtente_1, token: token_1 } = await generaUtenteTest('standard', false));
+    ({ id: idUtente_2, token: token_2 } = await generaUtenteTest('standard', false));
+
+    idBrano_1 = await generaBranoTest(idUtente_1);
+    idBrano_2 = await generaBranoTest(idUtente_2);
 });
 
 afterAll(async () => {
-    await eliminaUtenteTest(idUtente);
-    await eliminaBranoTest(idBrano);
+    await eliminaUtenteTest(idUtente_1);
+    await eliminaBranoTest(idBrano_1);
+
+    await eliminaUtenteTest(idUtente_2);
+    await eliminaBranoTest(idBrano_2);
+
     mongoose.connection.close(true);
 });
 
@@ -27,7 +35,7 @@ describe('Testing dell\'API per ottenere i preferiti', () => {
         const response = await request(app)
             .get('/api/preferiti/idNonValido')
             .set('Accept', 'application/json')
-            .set('x-access-token', token)
+            .set('x-access-token', token_1)
             
         expect(response.statusCode).toBe(400)
         expect(response.body).toEqual({ message: 'Il valore inserito per l\'utente non è un ID valido' });
@@ -37,7 +45,7 @@ describe('Testing dell\'API per ottenere i preferiti', () => {
         const response = await request(app)
             .get('/api/preferiti/000000000000000000000000')
             .set('Accept', 'application/json')
-            .set('x-access-token', token)
+            .set('x-access-token', token_1)
             
         expect(response.statusCode).toBe(404)
         expect(response.body).toEqual({ message: 'Utente non registrato' });
@@ -45,9 +53,9 @@ describe('Testing dell\'API per ottenere i preferiti', () => {
 
     test('Lista dei preferiti trovata', async () => {
         const response = await request(app)
-            .get('/api/preferiti/' + idUtente)
+            .get('/api/preferiti/' + idUtente_1)
             .set('Accept', 'application/json')
-            .set('x-access-token', token)
+            .set('x-access-token', token_1)
             
         expect(response.statusCode).toBe(200)
         expect(response.body).toMatchObject({ idBrani: [] })
@@ -61,10 +69,10 @@ describe('Testing dell\'API per la modifica dei preferiti', () => {
         const response = await request(app)
             .patch('/api/preferiti/modifica')
             .set('Accept', 'application/json')
-            .set('x-access-token', token)
+            .set('x-access-token', token_2)
             .send({
                 idUtente: 'idNonValido',
-                idBrano: idBrano,
+                idBrano: idBrano_2,
                 azione: 'aggiunta'
             })
         
@@ -76,9 +84,9 @@ describe('Testing dell\'API per la modifica dei preferiti', () => {
         const response = await request(app)
             .patch('/api/preferiti/modifica')
             .set('Accept', 'application/json')
-            .set('x-access-token', token)
+            .set('x-access-token', token_2)
             .send({
-                idUtente: idUtente,
+                idUtente: idUtente_2,
                 idBrano: 'idNonValido',
                 azione: 'aggiunta'
             })
@@ -91,10 +99,10 @@ describe('Testing dell\'API per la modifica dei preferiti', () => {
         const response = await request(app)
             .patch('/api/preferiti/modifica')
             .set('Accept', 'application/json')
-            .set('x-access-token', token)
+            .set('x-access-token', token_2)
             .send({
-                idUtente: idUtente,
-                idBrano: idBrano,
+                idUtente: idUtente_2,
+                idBrano: idBrano_2,
                 azione: 'azioneNonValida'
             })
         
@@ -106,10 +114,10 @@ describe('Testing dell\'API per la modifica dei preferiti', () => {
         const response = await request(app)
             .patch('/api/preferiti/modifica')
             .set('Accept', 'application/json')
-            .set('x-access-token', token)
+            .set('x-access-token', token_2)
             .send({
                 idUtente: '000000000000000000000000',
-                idBrano: idBrano,
+                idBrano: idBrano_2,
                 azione: 'aggiunta'
             })
         
@@ -121,9 +129,9 @@ describe('Testing dell\'API per la modifica dei preferiti', () => {
         const response = await request(app)
             .patch('/api/preferiti/modifica')
             .set('Accept', 'application/json')
-            .set('x-access-token', token)
+            .set('x-access-token', token_2)
             .send({
-                idUtente: idUtente,
+                idUtente: idUtente_2,
                 idBrano: '000000000000000000000000',
                 azione: 'aggiunta'
             })
@@ -136,10 +144,10 @@ describe('Testing dell\'API per la modifica dei preferiti', () => {
         const response = await request(app)
             .patch('/api/preferiti/modifica')
             .set('Accept', 'application/json')
-            .set('x-access-token', token)
+            .set('x-access-token', token_2)
             .send({
-                idUtente: idUtente,
-                idBrano: idBrano,
+                idUtente: idUtente_2,
+                idBrano: idBrano_2,
                 azione: 'rimozione'
             })
         
@@ -151,25 +159,25 @@ describe('Testing dell\'API per la modifica dei preferiti', () => {
         const response = await request(app)
             .patch('/api/preferiti/modifica')
             .set('Accept', 'application/json')
-            .set('x-access-token', token)
+            .set('x-access-token', token_2)
             .send({
-                idUtente: idUtente,
-                idBrano: idBrano,
+                idUtente: idUtente_2,
+                idBrano: idBrano_2,
                 azione: 'aggiunta'
             })
         
         expect(response.statusCode).toBe(200);
-        expect(response.body).toMatchObject({ idBrani: [idBrano]});
+        expect(response.body).toMatchObject({ idBrani: [idBrano_2]});
     });
 
     test('Aggiunta non valida', async () => {
         const response = await request(app)
             .patch('/api/preferiti/modifica')
             .set('Accept', 'application/json')
-            .set('x-access-token', token)
+            .set('x-access-token', token_2)
             .send({
-                idUtente: idUtente,
-                idBrano: idBrano,
+                idUtente: idUtente_2,
+                idBrano: idBrano_2,
                 azione: 'aggiunta'
             })
         
@@ -181,17 +189,17 @@ describe('Testing dell\'API per la modifica dei preferiti', () => {
         const response = await request(app)
             .patch('/api/preferiti/modifica')
             .set('Accept', 'application/json')
-            .set('x-access-token', token)
+            .set('x-access-token', token_2)
             .send({
-                idUtente: idUtente,
-                idBrano: idBrano,
+                idUtente: idUtente_2,
+                idBrano: idBrano_2,
                 azione: 'rimozione'
             })
         
         expect(response.statusCode).toBe(200);
 
         (response.body.idBrani).forEach((id:any) => {
-            if (id.toString() === idBrano) {
+            if (id.toString() === idBrano_2) {
                 fail('Brano non rimosso');
             }
         });

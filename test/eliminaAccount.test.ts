@@ -3,17 +3,19 @@ import request from 'supertest';
 import mongoose from 'mongoose';
 
 import app from '../src/app';
-import { generaUtenteTest, eliminaUtenteTest } from '../scripts';
+import { generaUtenteTest, generaBranoTest } from '../scripts';
 
 describe('Testing dell\'API di eliminazione account', () => {
 
     let connection;
-    let id: string, token: string;
+    let id: string, token: string, idBrano: string;
 
     beforeAll(async () => {
         mongoose.set('strictQuery', true);
         connection = await mongoose.connect(process.env.MONGODB_URI || "");
+
         ({ id, token } = await generaUtenteTest());
+        idBrano = await generaBranoTest(id);
     });
 
     afterAll(async () => {

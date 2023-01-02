@@ -7,6 +7,8 @@ import Utente, { Utente as UtenteT } from './models/utente';
 import Brano, { Brano as BranoT } from './models/brano';
 import Preferiti, { Preferiti as PreferitiT } from './models/preferiti';
 
+import { creaPreferiti } from '../scripts';
+
 // Get a user's favorite songs
 router.get('/api/preferiti/:idUtente', async (req, res) => {
 
@@ -121,15 +123,5 @@ router.patch('/api/preferiti/modifica', async (req, res) => {
     preferiti = (await Preferiti.find({ utente: req.body.idUtente }))[0];
     res.status(200).json({ idBrani: preferiti.listaBrani });
 });
-
-async function creaPreferiti(idUtente: string) {
-    let nuoviPreferiti = new Preferiti({
-        utente: idUtente,
-        listaBrani: []
-    });
-
-    await nuoviPreferiti.save()
-    return (await Preferiti.find({ utente: idUtente }))[0];
-}
 
 export default router;

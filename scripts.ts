@@ -4,6 +4,7 @@ import jwt from 'jsonwebtoken';
 
 import Utente, { Utente as UtenteT }  from './src/models/utente';
 import Brano, { Brano as BranoT } from './src/models/brano';
+import Preferiti, { Preferiti as PreferitiT } from './src/models/preferiti';
 
 dotenv.config();
 const secret = process.env.SUPER_SECRET || "web-music-player";
@@ -45,7 +46,7 @@ export function generaToken(utente: UtenteT) {
     return token;
 }
 
-export async function generaUtenteTest(tipoAccount?:string) {
+export async function generaUtenteTest(tipoAccount?:string, preferiti:boolean=true) {
     let nuovoUtente = new Utente({
         email: 'email@valida.com',
         password: 'PasswordValida&',
@@ -55,7 +56,21 @@ export async function generaUtenteTest(tipoAccount?:string) {
     nuovoUtente = await nuovoUtente.save();
     const token = generaToken(nuovoUtente)
     
+    if (preferiti) {
+        creaPreferiti(nuovoUtente.id);
+    }
+
     return { id: nuovoUtente.id, token: token }
+}
+
+export async function creaPreferiti(idUtente: string) {
+    let nuoviPreferiti = new Preferiti({
+        utente: idUtente,
+        listaBrani: []
+    });
+
+    await nuoviPreferiti.save()
+    return (await Preferiti.find({ utente: idUtente }))[0];
 }
 
 export async function eliminaUtenteTest(id: string) {
